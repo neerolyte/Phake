@@ -42,7 +42,9 @@
  * @link       http://www.digitalsandwich.com/
  */
 
-class Phake_Proxies_CallVerifierProxyTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class Phake_Proxies_CallVerifierProxyTest extends TestCase
 {
     /**
      * @var Phake_Proxies_CallVerifierProxy
@@ -67,8 +69,8 @@ class Phake_Proxies_CallVerifierProxyTest extends PHPUnit_Framework_TestCase
         $this->client     = new Phake_Client_Default();
         $this->obj        = new Phake_CallRecorder_Recorder();
 
-        $matcher1 = new Phake_Matchers_EqualsMatcher('foo', new \SebastianBergmann\Comparator\Factory());
-        $matcher2 = new Phake_Matchers_EqualsMatcher(array(), new \SebastianBergmann\Comparator\Factory());
+        $matcher1 = new Phake_Matchers_EqualsMatcher('foo', \SebastianBergmann\Comparator\Factory::getInstance());
+        $matcher2 = new Phake_Matchers_EqualsMatcher(array(), \SebastianBergmann\Comparator\Factory::getInstance());
         $matcher1->setNextMatcher($matcher2);
         $this->proxy = new Phake_Proxies_CallVerifierProxy($matcher1, $this->client, false);
 
@@ -89,8 +91,8 @@ class Phake_Proxies_CallVerifierProxyTest extends PHPUnit_Framework_TestCase
 
     public function testStaticIsCalledOn()
     {
-        $matcher1 = new Phake_Matchers_EqualsMatcher('foo', new \SebastianBergmann\Comparator\Factory());
-        $matcher2 = new Phake_Matchers_EqualsMatcher(array(), new \SebastianBergmann\Comparator\Factory());
+        $matcher1 = new Phake_Matchers_EqualsMatcher('foo', \SebastianBergmann\Comparator\Factory::getInstance());
+        $matcher2 = new Phake_Matchers_EqualsMatcher(array(), \SebastianBergmann\Comparator\Factory::getInstance());
         $matcher1->setNextMatcher($matcher2);
         $this->proxy = new Phake_Proxies_CallVerifierProxy($matcher1, $this->client, true);
 

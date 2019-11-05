@@ -1,26 +1,26 @@
 <?php
-/* 
+/*
  * Phake - Mocking Framework
- * 
+ *
  * Copyright (c) 2010-2012, Mike Lively <m@digitalsandwich.com>
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  *  *  Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
- * 
+ *
  *  *  Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in
  *     the documentation and/or other materials provided with the
  *     distribution.
- * 
+ *
  *  *  Neither the name of Mike Lively nor the names of his
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -33,7 +33,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @category   Testing
  * @package    Phake
  * @author     Mike Lively <m@digitalsandwich.com>
@@ -42,10 +42,12 @@
  * @link       http://www.digitalsandwich.com/
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Description of MockClass
  */
-class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
+class Phake_ClassGenerator_MockClassTest extends TestCase
 {
     /**
      * @var Phake_ClassGenerator_MockClass
@@ -113,9 +115,9 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
-        $answer       = $this->getMock('Phake_Stubber_IAnswer');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
+        $answer       = $this->getMockBuilder('Phake_Stubber_IAnswer')->getMock();
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
         $this->assertSame($callRecorder, Phake::getInfo($mock)->getCallRecorder());
@@ -131,8 +133,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = new Phake_Stubber_Answers_NoAnswer();
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -154,8 +156,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = new Phake_Stubber_Answers_NoAnswer();
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -223,7 +225,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $newClassName = __CLASS__ . '_testClass32';
         $mockedClass = array('PhakeTest_MockedClass', 'PhakeTest_MockedConstructedClass');
 
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
     }
 
@@ -237,8 +239,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -256,8 +258,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -283,8 +285,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -311,15 +313,17 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $callRecorder Phake_CallRecorder_Recorder */
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         /** @var $stubMapper Phake_Stubber_StubMapper */
-        $stubMapper = $this->getMock('Phake_Stubber_StubMapper');
-        $answer     = $this->getMock('Phake_Stubber_IAnswer');
+        $stubMapper = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
+        $answer     = $this->getMockBuilder('Phake_Stubber_IAnswer')->getMock();
         $mock       = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
-        $answer           = $this->getMock('Phake_Stubber_IAnswer');
+        $answer           = $this->getMockBuilder('Phake_Stubber_IAnswer')->getMock();
         $answerCollection = new Phake_Stubber_AnswerCollection($answer);
-        $matcher          = $this->getMock('Phake_Matchers_MethodMatcher', array(), array(), '', false);
+        $matcher          = $this->getMockBuilder('Phake_Matchers_MethodMatcher')
+                                ->disableOriginalConstructor()
+                                ->getMock();
 
         $stubMapper->expects($this->once())
             ->method('mapStubToMatcher')
@@ -338,8 +342,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
 
         $mock = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
@@ -359,8 +363,8 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
 
         $mock = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
@@ -378,7 +382,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         $callRecorder = Phake::mock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer       = Phake::mock('Phake_Stubber_Answers_NoAnswer', Phake::ifUnstubbed()->thenCallParent());
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
@@ -437,9 +441,9 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
-        $stubMapper   = $this->getMock('Phake_Stubber_StubMapper');
-        $answer       = $this->getMock('Phake_Stubber_IAnswer');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
+        $stubMapper   = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
+        $answer       = $this->getMockBuilder('Phake_Stubber_IAnswer')->getMock();
         $mock         = $this->classGen->instantiate($newClassName, $callRecorder, $stubMapper, $answer);
 
         $this->assertEquals('PhakeTest_MockedClass', $mock::__PHAKE_name);
@@ -456,9 +460,9 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $callRecorder Phake_CallRecorder_Recorder */
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         /** @var $stubMapper Phake_Stubber_StubMapper */
-        $stubMapper = $this->getMock('Phake_Stubber_StubMapper');
+        $stubMapper = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer     = new Phake_Stubber_Answers_ParentDelegate();
         $mock       = $this->classGen->instantiate(
             $newClassName,
@@ -483,9 +487,9 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $callRecorder Phake_CallRecorder_Recorder */
-        $callRecorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $callRecorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         /** @var $stubMapper Phake_Stubber_StubMapper */
-        $stubMapper = $this->getMock('Phake_Stubber_StubMapper');
+        $stubMapper = $this->getMockBuilder('Phake_Stubber_StubMapper')->getMock();
         $answer     = new Phake_Stubber_Answers_ParentDelegate();
         $mock       = $this->classGen->instantiate(
             $newClassName,
@@ -535,6 +539,18 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->addToAssertionCount(1);
     }
 
+    public function testMockFinalClassThrowsException()
+    {
+        $expectedException = new InvalidArgumentException("Final classes cannot be mocked.");
+
+        try {
+            $mock = Phake::mock('PhakeTest_FinalClass');
+            $this->fail("The mocked final method did not throw an exception");
+        } catch (InvalidArgumentException $actualException) {
+            $this->assertEquals($actualException, $expectedException);
+        }
+    }
+
     /**
      * Tests that the mocked object's __toString() method returns a string by default.
      */
@@ -545,7 +561,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $recorder Phake_CallRecorder_Recorder */
-        $recorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $recorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         $mapper   = new Phake_Stubber_StubMapper();
         $answer   = new Phake_Stubber_Answers_ParentDelegate();
 
@@ -559,18 +575,20 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testDestructMocked()
     {
-        $newClassName = __CLASS__ . '_TestClass' . uniqid();
+        $newClassName = __CLASS__ . '_TestClass' . bin2hex(random_bytes(7));
         $mockedClass  = 'PhakeTest_DestructorClass';
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $recorder Phake_CallRecorder_Recorder */
-        $recorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $recorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         $mapper   = new Phake_Stubber_StubMapper();
         $answer   = new Phake_Stubber_Answers_ParentDelegate();
 
         $mock = $this->classGen->instantiate($newClassName, $recorder, $mapper, $answer);
 
+        PhakeTest_DestructorClass::$destructCalled = false;
         unset($mock);
+        $this->assertFalse(PhakeTest_DestructorClass::$destructCalled, "It appears that the destructor was called");
     }
 
     public function testSerializableMock()
@@ -580,14 +598,14 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         /** @var $recorder Phake_CallRecorder_Recorder */
-        $recorder = $this->getMock('Phake_CallRecorder_Recorder');
+        $recorder = $this->getMockBuilder('Phake_CallRecorder_Recorder')->getMock();
         $mapper   = new Phake_Stubber_StubMapper();
         $answer   = new Phake_Stubber_Answers_ParentDelegate();
 
         try {
             $mock = $this->classGen->instantiate($newClassName, $recorder, $mapper, $answer);
             $this->assertInstanceOf('PhakeTest_SerializableClass', $mock);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->fail("Can't instantiate Serializable Object");
         }
     }
@@ -605,10 +623,9 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
     /**
      * Ensure that 'callable' type hints in method parameters are supported.
      */
-    public function testCallableTypeHint ()
+    public function testCallableTypeHint()
     {
-        if (!version_compare(PHP_VERSION, '5.4', '>='))
-        {
+        if (!version_compare(PHP_VERSION, '5.4', '>=')) {
             $this->markTestSkipped('callable typehint require PHP 5.4');
         }
 
@@ -626,7 +643,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testGeneratedMockClassHasStaticInfo()
     {
-        $newClassName = __CLASS__ . '_TestClass' . uniqid();
+        $newClassName = __CLASS__ . '_TestClass' . bin2hex(random_bytes(7));
         $mockedClass  = 'stdClass';
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
@@ -648,7 +665,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $this->classGen->generate($newClassName, $mockedClass, $this->infoRegistry);
 
         Phake::verify($this->infoRegistry)->addInfo($newClassName::$__PHAKE_staticInfo);
-	}
+    }
 
     /**
      * Test that the generated mock has the same doc mocked class
@@ -671,8 +688,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testStubbingVariadics()
     {
-        if (version_compare(phpversion(), '5.6.0') < 0)
-        {
+        if (version_compare(phpversion(), '5.6.0') < 0) {
             $this->markTestSkipped('Variadics are not supported in PHP versions prior to 5.6');
         }
 
@@ -685,8 +701,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testMockingVariadics()
     {
-        if (version_compare(phpversion(), '5.6.0') < 0)
-        {
+        if (version_compare(phpversion(), '5.6.0') < 0) {
             $this->markTestSkipped('Variadics are not supported in PHP versions prior to 5.6');
         }
 
@@ -699,8 +714,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testStubbingScalarReturnHints()
     {
-        if (version_compare(phpversion(), '7.0.0RC1') < 0)
-        {
+        if (version_compare(phpversion(), '7.0.0RC1') < 0) {
             $this->markTestSkipped('Scalar type hints are not supported in PHP versions prior to 7.0');
         }
 
@@ -713,8 +727,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testStubbingScalarReturnsWrongType()
     {
-        if (version_compare(phpversion(), '7.0.0RC1') < 0)
-        {
+        if (version_compare(phpversion(), '7.0.0RC1') < 0) {
             $this->markTestSkipped('Scalar type hints are not supported in PHP versions prior to 7.0');
         }
 
@@ -722,16 +735,12 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
         Phake::when($mock)->scalarHints->thenReturn(array());
 
-        try
-        {
+        try {
             $this->assertEquals(array(), $mock->scalarHints(1, 1));
-        }
-        catch (TypeError $e)
-        {
+        } catch (TypeError $e) {
+            Phake::verify($mock)->scalarHints(1, 1);
             return;
-        }
-        catch (Throwable $e)
-        {
+        } catch (Throwable $e) {
             $this->fail("Expected A Type Error, instead got " . get_class($e) . " {$e}");
         }
         $this->fail("Expected A Type Error, no error received");
@@ -739,8 +748,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testDefaultStubChanged()
     {
-        if (version_compare(phpversion(), '7.0.0RC1') < 0)
-        {
+        if (version_compare(phpversion(), '7.0.0RC1') < 0) {
             $this->markTestSkipped('Scalar type hints are not supported in PHP versions prior to 7.0');
         }
 
@@ -753,8 +761,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testVoidStubReturnsProperly()
     {
-        if (version_compare(phpversion(), '7.1.0') < 0)
-        {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
             $this->markTestSkipped('Void type hints are not supported in PHP versions prior to 7.1');
         }
 
@@ -767,8 +774,7 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
 
     public function testVoidStubThrowsException()
     {
-        if (version_compare(phpversion(), '7.1.0') < 0)
-        {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
             $this->markTestSkipped('Void type hints are not supported in PHP versions prior to 7.1');
         }
 
@@ -777,22 +783,17 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         $expectedException = new Exception("Test Exception");
         Phake::when($mock)->voidMethod->thenThrow($expectedException);
 
-        try
-        {
+        try {
             $mock->voidMethod();
             $this->fail("The mocked void method did not throw an exception");
-        }
-        catch (Exception $actualException)
-        {
+        } catch (Exception $actualException) {
             $this->assertSame($expectedException, $actualException, "The same exception was not thrown");
         }
     }
 
-
     public function testVoidStubCanCallParent()
     {
-        if (version_compare(phpversion(), '7.1.0') < 0)
-        {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
             $this->markTestSkipped('Void type hints are not supported in PHP versions prior to 7.1');
         }
 
@@ -836,5 +837,88 @@ class Phake_ClassGenerator_MockClassTest extends PHPUnit_Framework_TestCase
         // and eval the code to check the syntax for now
         eval("function() { $code };");
     }
-}
 
+    public function testStubbingNotNullableReturnHint()
+    {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
+            $this->markTestSkipped('Nullable return hints are not supported in PHP versions prior to 7.1');
+        }
+
+        $mock = Phake::mock('PhakeTest_ScalarTypes');
+
+        Phake::when($mock)->objectReturn->thenReturn(null);
+
+        try {
+            $mock->objectReturn();
+            $this->fail('Expected TypeError');
+        } catch (TypeError $e) {
+            $this->assertTrue(true);
+        }
+    }
+
+    public function testStubbingNullableReturnHints()
+    {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
+            $this->markTestSkipped('Nullable return hints are not supported in PHP versions prior to 7.1');
+        }
+
+        $mock = Phake::mock('PhakeTest_NullableTypes');
+        Phake::when($mock)->objectReturn->thenReturn(null);
+
+        try {
+            $this->assertSame(null, $mock->objectReturn());
+        } catch (TypeError $e) {
+            $this->fail('Expected stubbing objectReturn null');
+        }
+
+        Phake::verify($mock, Phake::times(1))->objectReturn();
+    }
+
+    public function testStubbingNullableParameterHints()
+    {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
+            $this->markTestSkipped('Nullable return hints are not supported in PHP versions prior to 7.1');
+        }
+
+        $mock = Phake::mock('PhakeTest_NullableTypes');
+
+        try {
+            $mock->objectParameter(null);
+        } catch (TypeError $e) {
+            $this->fail('Expected stubbing objectParameter to accept null');
+        }
+
+        Phake::verify($mock, Phake::times(1))->objectParameter(null);
+    }
+
+    public function testStubbingNullableReturnWrongType()
+    {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
+            $this->markTestSkipped('Nullable return hints are not supported in PHP versions prior to 7.1');
+        }
+
+        $mock = Phake::mock('PhakeTest_NullableTypes');
+        Phake::when($mock)->objectReturn->thenReturn(array());
+
+        try {
+            $mock->objectReturn();
+        } catch (TypeError $e) {
+            $this->assertTrue(true);
+            return;
+        } catch (Throwable $e) {
+            $this->fail("Expected A Type Error, instead got " . get_class($e) . " {$e}");
+        }
+
+        $this->fail("Expected A Type Error, no error received");
+    }
+
+    public function testDefaultReturnType()
+    {
+        if (version_compare(phpversion(), '7.1.0') < 0) {
+            $this->markTestSkipped('Nullable return hints are not supported in PHP versions prior to 7.1');
+        }
+
+        $mock = Phake::mock('PhakeTest_NullableTypes');
+        $this->assertTrue($mock->objectReturn() instanceof PhakeTest_A);
+    }
+}

@@ -157,6 +157,10 @@ class Phake_ClassGenerator_MockClass
             $mockedClass = new ReflectionClass($mockedClassName);
             $mockedClasses[] = $mockedClass;
 
+            if($mockedClass->isFinal()) {
+                throw new InvalidArgumentException("Final classes cannot be mocked.");
+            }
+
             if (!$mockedClass->isInterface()) {
                 if (!empty($parent))
                 {
@@ -336,7 +340,7 @@ class {$newClassName} {$extends}
                 && !isset($implementedMethods[$methodName])
             ) {
                 $implementedMethods[$methodName] = $methodName;
-                $methodDefs .= $this->implementMethod($method, $method->isStatic()) . "\n";
+                $methodDefs .= $this->implementMethod($method, $mockedClass->getName(), $method->isStatic()) . "\n";
             }
         }
 
@@ -453,10 +457,12 @@ class {$newClassName} {$extends}
      * Creates the implementation of a single method
      *
      * @param ReflectionMethod $method
+     * @param string           $mockedClassName
+     * @param bool             $static
      *
      * @return string
      */
-    protected function implementMethod(ReflectionMethod $method, $static = false)
+    protected function implementMethod(ReflectionMethod $method, $mockedClassName, $static = false)
     {
         $modifiers = implode(
             ' ',
@@ -480,9 +486,21 @@ class {$newClassName} {$extends}
         if (method_exists($method, 'hasReturnType') && $method->hasReturnType())
         {
             $returnType = $method->getReturnType();
-            $returnHint = ' : ' . $returnType;
+            $returnTypeName = (string)$returnType;
 
-            if ($returnType == 'void')
+            if ($returnTypeName == 'self')
+            {
+                $returnTypeName = $mockedClassName;
+            }
+
+            if ($returnType->allowsNull())
+            {
+                $returnHint = ' : ?' . $returnTypeName;
+            } else {
+                $returnHint = ' : ' . $returnTypeName;
+            }
+
+            if ($returnTypeName == 'void')
             {
                 $nullReturn = '';
                 $resultReturn = '';
@@ -599,6 +617,13 @@ class {$newClassName} {$extends}
             } elseif (method_exists($parameter, 'hasType') && $parameter->hasType())
             {
                 $type = $parameter->getType() . ' ';
+            }
+
+            if (method_exists($parameter, 'hasType') && $parameter->hasType() && $parameter->allowsNull()) {
+                // a parameter can have a type hint and a default value of null without being a 7.1 nullable type hint
+                if (!($parameter->isDefaultValueAvailable() && $parameter->getDefaultValue() === null)) {
+                    $type = '?'.$type;
+                }
             }
         }
         catch (ReflectionException $e)

@@ -47,7 +47,7 @@
  *
  * @author Mike Lively <m@digitalsandwich.com>
  */
-class Phake_Proxies_AnswerBinderProxy
+class Phake_Proxies_AnswerBinderProxy implements Phake_Proxies_AnswerProxyInterface
 {
     /**
      * @var Phake_Stubber_IAnswerBinder
